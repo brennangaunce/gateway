@@ -28,7 +28,6 @@ import org.apache.mina.core.buffer.IoBuffer;
 import org.apache.mina.core.service.IoHandlerAdapter;
 import org.apache.mina.core.session.IoSession;
 import org.slf4j.Logger;
-
 import org.kaazing.gateway.transport.BridgeSession;
 import org.kaazing.gateway.transport.bridge.Message;
 import org.kaazing.gateway.transport.io.filter.IoMessageCodecFilter;
@@ -51,6 +50,11 @@ public class BroadcastListenHandler extends IoHandlerAdapter {
 
 	@Override
     public void sessionOpened(IoSession session) throws Exception {
+		System.out.println("sessionOpened: "+session.getId());
+		for (Object key : session.getAttributeKeys()) {
+			System.out.println("Key: "+key);
+		}
+
 	    session.getFilterChain().addLast("io", codec);
     }
 

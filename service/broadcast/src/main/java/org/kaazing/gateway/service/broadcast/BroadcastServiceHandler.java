@@ -31,7 +31,6 @@ import org.apache.mina.core.service.IoHandlerAdapter;
 import org.apache.mina.core.session.IoSession;
 import org.apache.mina.util.ConcurrentHashSet;
 import org.slf4j.Logger;
-
 import org.kaazing.gateway.transport.io.filter.IoMessageCodecFilter;
 
 class BroadcastServiceHandler extends IoHandlerAdapter {
@@ -77,9 +76,25 @@ class BroadcastServiceHandler extends IoHandlerAdapter {
         }
     }
 
+    private String getURIFromSession(IoSession session) throws Exception {
+		Class<?> clazz = ClassLoader.getSystemClassLoader().loadClass("org.kaazing.gateway.transport.wsn.WsnSession");
+		if (clazz.isInstance(session)) {
+			return (String) clazz.getMethod("getParentHttpRequestURI").invoke(session).toString();
+		}
+		else {
+			return null;
+		}
+    }
 
     @Override
     public void sessionOpened(IoSession session) throws Exception {
+		System.out.println("sessionOpened: "+session.getId());
+		for (Object key : session.getAttributeKeys()) {
+			System.out.println("Key: "+key);
+		}
+		System.out.println(session.getClass().getSimpleName());
+		System.out.println("URI: "+getURIFromSession(session));
+
         session.getFilterChain().addLast("io", codec);
         clients.add(session);
     }
