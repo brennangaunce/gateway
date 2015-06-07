@@ -103,15 +103,11 @@ public class BroadcastService implements Service {
 
         boolean disconnectClientsOnReconnect = parseBoolean(
                 BROADCAST_SERVICE_DISCONNECT_CLIENTS_ON_RECONNECT,
-//                    BROADCAST_SERVICE_DISCONNECT_CLIENTS_ON_RECONNECT.getPropertyName(),
                 configuration.getProperty(BROADCAST_SERVICE_DISCONNECT_CLIENTS_ON_RECONNECT),
-//                    BROADCAST_SERVICE_DISCONNECT_CLIENTS_ON_RECONNECT.getProperty(configuration),
                 false);
         long maximumScheduledWriteBytes = parsePositiveInteger(
                 BROADCAST_SERVICE_MAXIMUM_PENDING_BYTES,
-//                BROADCAST_SERVICE_MAXIMUM_PENDING_BYTES.getPropertyName(),
                 configuration.getProperty(BROADCAST_SERVICE_MAXIMUM_PENDING_BYTES),
-//                BROADCAST_SERVICE_MAXIMUM_PENDING_BYTES.getProperty(configuration),
                 Long.MAX_VALUE);
         if ( maximumScheduledWriteBytes != Long.MAX_VALUE ) {
             // The system property was specified
